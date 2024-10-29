@@ -35,9 +35,9 @@ Bienvenue dans le projet **TP2_GestionAdmissions** ! Ce projet vise à développ
    ```
 
 ### Contribution
-Alex Berhaine
-Emmanuel Backiny Tamla
-Gnim Gregoire DAO
+Alex Berhaine,
+Emmanuel Backiny Tamla,
+Gnim Gregoire Dao
 ### Licence
 
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
