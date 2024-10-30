@@ -1,5 +1,7 @@
 package hopital.tp;
 
+
+
 class Lit {
     public enum Type {
         Standart, Privé, Public
@@ -18,6 +20,8 @@ class Lit {
         this.occupe = occupe;
         this.type = type;
         this.departement = departement;
+        
+        
     }
 
     public Lit() {
@@ -27,13 +31,13 @@ class Lit {
         return type;
     }
 
-    public double setPrix(double prix) { ////////----------
+    public double setPrix(double prix) { 
         this.prix = prix;
         return prix;
     }
 
     
-    public double getPrix() {   ////////-----------
+    public double getPrix() {  
         switch (tampon.getType()) {
             case Standart ->                 {
                     double val = 48.5;
@@ -73,6 +77,9 @@ class Lit {
 
     public String getNumeroLit() {
         return numeroLit;
+    }
+    public Departement getDepartement() {
+        return departement;
     }
 
     @Override

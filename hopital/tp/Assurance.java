@@ -1,6 +1,4 @@
 package hopital.tp;
-
-
 /**
  *
  * @author alexhaile

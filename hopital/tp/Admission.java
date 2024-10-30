@@ -8,12 +8,8 @@ import java.time.LocalDate;
  */
 public class Admission {
     private int IDAdmission;
-    private boolean chirurgieProgrammée;
-    private LocalDate dateAdmission;
-    private LocalDate dateChirurgie;
-    private LocalDate dateConge;
-    private boolean televiseurLoué;
-    private boolean telephoneLoué;
+    private LocalDate dateAdmission, dateChirurgie, dateConge;  
+    private boolean televiseurLoué, telephoneLoué, chirurgieProgrammée;
     Patient patient;
     Lit lit;
     Medecin medecin;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import hopital.tp.Lit.Type;
 import static hopital.tp.Lit.Type.Standart;
+import java.util.Random;
 /**
  * @author alexhaile
  * @author daognimgregoire
@@ -26,6 +27,30 @@ public class Gestionnaire {
         this.medecinConnecté = medecinConnecté;
     }
     
+    public void créationLit(){
+        Departement departement1 = new Departement(1,"Urgences");
+        Departement departement2 = new Departement(2,"Cardiologie");
+        Departement departement3 = new Departement(3,"Neurologie");
+        Departement departement4 = new Departement(4,"Oncologie");
+        Departement departement5 = new Departement(5,"Orthopédie");
+        Departement departement6 = new Departement(6,"Pédiatrie");
+        Departement departement7 = new Departement(7,"Gynécologie et obstétrique");
+        Departement departement8 = new Departement(8,"Radiologie");
+        Departement departement9 = new Departement(9,"Psychiatrie");
+        Departement departement10 = new Departement(10,"Chirurgie");
+        Departement departement11 = new Departement(11,"Dermatologie");
+        Random random = new Random();
+        for(int i=0; i<11;i++){
+            departements.add(new Departement(i+1,"Departement"+i));
+        }
+    for (int i = 0; i <= 150; i++) {
+        boolean isOccupe = random.nextBoolean();
+        Type istype = Type.values()[random.nextInt(Type.values().length)];
+        Departement isdepartement = departements.get(random.nextInt(departements.size()));
+        Lit lit = new Lit(String.valueOf(i), isOccupe, istype, isdepartement);
+        lits.add(lit);  
+    } 
+}
   public Patient creerPatient(){
      Patient malade = new Patient();
      System.out.println("Veillez entrez le nom de votre nouveau patient");
@@ -74,98 +99,55 @@ public class Gestionnaire {
      
      return malade;      
   }
-  public Lit creerLit(){
-     Lit lit = new Lit();
-      
-     System.out.println("Veillez entrez le numéro de lit de votre nouvelle admission");
-     String num_lit = new Scanner(System.in).nextLine();
-     lit.setNumeroLit(num_lit);
-     
-     System.out.println("Veillez indiquer si ce lit est occupé");//Si oui j'imagine que l'admission devra en trouvé un autre?
-     boolean occ = new Scanner(System.in).nextBoolean();
-     lit.setOccupe(occ);
-     
-     System.out.println("Veillez indiquer le type de ce lit");//Si oui j'imagine que l'admission devra en trouvé un autre?
-     String scn = new Scanner(System.in).nextLine();
-     Type type_lit= Standart; //Juste pour ne pas avoir d'erreur d'initialisation dans la suite du code
-     
-     try {
-            type_lit = Type.valueOf(scn);
-            System.out.println("Type de lit sélectionné : " + type_lit);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Type de lit invalide. Veuillez entrer Standart, Privé, Public");
-        }
-     lit.setType(type_lit);
-     
-     //Définition des différents département existants (Source: https://www.wikiwand.com/fr/articles/H%C3%B4pital)
-     //On a considérer que les départements reste relativement inchangés et l'ajout ou la supression se fera à l'aide d'un professionnel
-     Departement departement1 = new Departement(1,"Urgences");
-     Departement departement2 = new Departement(2,"Cardiologie");
-     Departement departement3 = new Departement(3,"Neurologie");
-     Departement departement4 = new Departement(4,"Oncologie");
-     Departement departement5 = new Departement(5,"Orthopédie");
-     Departement departement6 = new Departement(6,"Pédiatrie");
-     Departement departement7 = new Departement(7,"Gynécologie et obstétrique");
-     Departement departement8 = new Departement(8,"Radiologie");
-     Departement departement9 = new Departement(9,"Psychiatrie");
-     Departement departement10 = new Departement(10,"Chirurgie");
-     Departement departement11 = new Departement(11,"Dermatologie");
-     departements.add(departement1);
-     departements.add(departement2);
-     departements.add(departement3);
-     departements.add(departement4);
-     departements.add(departement5);
-     departements.add(departement6);
-     departements.add(departement7);
-     departements.add(departement8);
-     departements.add(departement9);
-     departements.add(departement10);
-     departements.add(departement11);
-     System.out.println("Veillez indiquer dans quel département se trouve ce lit"); // On suppose que les gestionnaires ont connaissance des nombres attribués aux différents départements
-     int no_depa = new Scanner(System.in).nextInt();
-     Departement departement_rech = new Departement();
-     for(int i=0; i<departements.size();i++){
-         if(departements.get(i).getIdDepartement()== no_depa){
-                departement_rech = departements.get(i);
-            }
-     }
-     lit.setDepartement(departement_rech);
-     
-       return lit;
-  }
+ 
+  
   public void ajouterPatient(){
       patients.add(creerPatient());
   } 
  
   public Admission creerAdmission(){
-      Admission formulaire = new Admission();
-      
+    Admission formulaire = new Admission();
+    
+    créationLit();
+
      System.out.println("Veillez entrez l'id de votre nouvelle admission");
      int id = new Scanner(System.in).nextInt();
      formulaire.setIDAdmission(id);
      
-     System.out.println("Veillez définir s'il y a une chirurgie programmée dans votre nouvelle admission");
-     boolean ch_p = new Scanner(System.in).nextBoolean(); ///Rendre simple l'usage du boolean
-     formulaire.setChirurgieProgrammée(ch_p);
-     
-     System.out.println("Veillez définir la date d'admission de votre nouvelle admission");
+    boolean ch_p = false;
+    while (true) {
+        System.out.println("Veillez définir s'il y a une chirurgie programmée dans votre nouvelle admission (oui/non)");
+        String input = new Scanner(System.in).nextLine();
+        if (input.equalsIgnoreCase("oui") || input.equalsIgnoreCase("non")) {
+           ch_p = Boolean.parseBoolean(input);
+           break;
+        } else {
+           System.out.println("Entrée invalide. Veuillez entrer 'oui' ou 'non'.");
+        }
+        formulaire.setChirurgieProgrammée(ch_p);
+    }
+
+     System.out.println("Veuillez définir la date d'admission de votre nouvelle admission");
      String date_a = new Scanner(System.in).nextLine();
      // Définir le format de la date
      DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        
      // Convertir la chaîne de caractères en LocalDate
      LocalDate dateAdmission = LocalDate.parse(date_a, formatter1);
      formulaire.setDateAdmission(dateAdmission);
      
-     System.out.println("Veillez définir la date de la chirurgie s'il yen a de votre nouvelle admission");//S'il ya une chirurgie?
-     String date_c = new Scanner(System.in).nextLine();
+     if (ch_p == true) {
+        System.out.println("Veillez définir la date de la chirurgie s'il yen a de votre nouvelle admission");//S'il ya une chirurgie?
+        String date_c = new Scanner(System.in).nextLine();
       // Définir le format de la date
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
         // Convertir la chaîne de caractères en LocalDate
         LocalDate dateChirurgie = LocalDate.parse(date_c, formatter2);
-     formulaire.setDateChirurgie(dateChirurgie);
+        formulaire.setDateChirurgie(dateChirurgie);
+     } else {
+        formulaire.setDateChirurgie(null);
+     }
      
+
      System.out.println("Veillez indiqué si l'option téléviseur loué a été choisi pour votre nouvelle admission");
      boolean télév = new Scanner(System.in).nextBoolean(); ///Rendre simple l'usage du boolean
      formulaire.setTeleviseurLoué(télév);
@@ -175,8 +157,19 @@ public class Gestionnaire {
      formulaire.setTelephoneLoué(télép);
      
      formulaire.setPatient(creerPatient());
+
+     System.out.println("Veuillez entrez le numero du lit de votre nouvelle admission ");
+     String id_lit = new Scanner(System.in).nextLine();
+     for (int i = 0; i < lits.size(); i++) {
+        if(lits.get(i).getNumeroLit().equals(id_lit)){
+            formulaire.setLit(lits.get(i));
+            formulaire.setDepartement(lits.get(i).getDepartement()); //L'attribut département est déja contenu dans l'attribut lit creer récemment
+        }
+     }
+
      
-     formulaire.setLit(creerLit()); //L'attribut département est déja contenu dans l'attribut lit creer récemment
+     
+     
      
      
        return formulaire;
@@ -295,7 +288,7 @@ public class Gestionnaire {
             }
   } 
   }
-    public void afficherFacturePatient(Patient malade_recherche){
+    public void afficherFacturePatient(Admission malade_recherche){
       rechercherPatient();//Maintenant qu'on a trouver le patient comment afficher sa facture?
       
   } 
