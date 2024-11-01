@@ -1,10 +1,13 @@
 package hopital.tp;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import hopital.tp.Lit.Type;
-import static hopital.tp.Lit.Type.Standart;
 import java.util.Random;
 /**
  * @author alexhaile
@@ -12,13 +15,13 @@ import java.util.Random;
  * @author emmanuel
  */
 public class Gestionnaire {
-   private ArrayList<Admission> admissions = new ArrayList<>();
-   private ArrayList<Patient> patients = new ArrayList<>();
-   private ArrayList<Medecin> medecins = new ArrayList<>();
-   private ArrayList<Lit> lits = new ArrayList<>();
-   private ArrayList<Assurance> assurances = new ArrayList<>();
-   private ArrayList<Departement> departements = new ArrayList<>();
-   private Medecin medecinConnecté;
+   public ArrayList<Admission> admissions = new ArrayList<>();
+   public ArrayList<Patient> patients = new ArrayList<>();
+   public ArrayList<Medecin> medecins = new ArrayList<>();
+   public ArrayList<Lit> lits = new ArrayList<>();
+   public ArrayList<Assurance> assurances = new ArrayList<>();
+   public ArrayList<Departement> departements = new ArrayList<>();
+   public Medecin medecinConnecté;
 
     public Gestionnaire() {
     }
@@ -39,11 +42,19 @@ public class Gestionnaire {
         Departement departement9 = new Departement(9,"Psychiatrie");
         Departement departement10 = new Departement(10,"Chirurgie");
         Departement departement11 = new Departement(11,"Dermatologie");
-        Random random = new Random();
-        for(int i=0; i<11;i++){
-            departements.add(new Departement(i+1,"Departement"+i));
-        }
+        departements.add(departement1);
+        departements.add(departement2);
+        departements.add(departement3);
+        departements.add(departement4);
+        departements.add(departement5);
+        departements.add(departement6);
+        departements.add(departement7);
+        departements.add(departement8);
+        departements.add(departement9);
+        departements.add(departement10);
+        departements.add(departement11);
     for (int i = 0; i <= 150; i++) {
+        Random random = new Random();
         boolean isOccupe = random.nextBoolean();
         Type istype = Type.values()[random.nextInt(Type.values().length)];
         Departement isdepartement = departements.get(random.nextInt(departements.size()));
@@ -51,194 +62,395 @@ public class Gestionnaire {
         lits.add(lit);  
     } 
 }
+public void créationMedecin(){
+    Medecin medecin1 = new Medecin("1", "medecin1", "crosemont", "DAO", "Gnim", "123 rue de la rue", "Montreal", "Quebec", "H1H 1H1", "514-123-4567");
+    Medecin medecin2 = new Medecin("2", "medecin2", "crosemont", "Haile", "Alex", "123 rue de la rue", "Montreal", "Quebec", "H1H 1H1", "514-123-4567");
+    Medecin medecin3 = new Medecin("3", "medecin3", "crosemont", "Backiny", "Emmanuel", "123 rue de la rue", "Montreal", "Quebec", "H1H 1H1", "514-123-4567");
+    medecins.add(medecin1);
+    medecins.add(medecin2);
+    medecins.add(medecin3);
+}
+public void creationAssurance(){
+    Assurance assurance1 = new Assurance(1, "SunLife");
+    Assurance assurance2 = new Assurance(2, "ManuLife");
+    Assurance assurance3 = new Assurance(3, "Desjardins");
+    assurances.add(assurance1);
+    assurances.add(assurance2);
+    assurances.add(assurance3);
+}
+  private Scanner scanner = new Scanner(System.in);
+
   public Patient creerPatient(){
-     Patient malade = new Patient();
-     System.out.println("Veillez entrez le nom de votre nouveau patient");
-     String name = new Scanner(System.in).nextLine();
-      malade.nom = name;
-      
-     System.out.println("Veillez entrez le prénom de votre nouveau patient");
-     String Firstname = new Scanner(System.in).nextLine();
-      malade.prenom = Firstname;
-      
-     System.out.println("Veillez entrez le numéro de téléphone de votre nouveau patient");
-     String number = new Scanner(System.in).nextLine();
-      malade.telephone = number;
-      
-     System.out.println("Veillez entrez la ville de votre nouveau patient");
-     String city = new Scanner(System.in).nextLine();
-      malade.ville = city;
-      
-     System.out.println("Veillez entrez la province de votre nouveau patient");
-     String region = new Scanner(System.in).nextLine();
-      malade.province = region;
-     
-     System.out.println("Veillez entrez l'adresse de votre nouveau patient");
-     String adress = new Scanner(System.in).nextLine();
-      malade.addresse = adress;
-      
-     System.out.println("Veillez entrez le code postal de votre nouveau patient");
-     String mailbox = new Scanner(System.in).nextLine();
-      malade.codePostal = mailbox;
-      
-     System.out.println("Veillez entrez l'id de l'assurance de votre nouveau patient");
-     Scanner scn = new Scanner(System.in);
-     int id_malade = scn.nextInt();
-     System.out.println("Veillez entrez le nom de la compagnie de l'assurance de votre nouveau patient");
-     String name_compagnie = new Scanner(System.in).nextLine();
-     Assurance assur = new Assurance(id_malade, name_compagnie);
-     malade.setAssurance(assur);
-     
-     System.out.println("Veillez entrez la date de naissance de votre nouveau patient");
-     String date_naissance = new Scanner(System.in).nextLine();
-     malade.setDateNaissance(date_naissance);
-     
-     System.out.println("Veillez entrez le numero RAMQ de votre nouveau patient");
-     String num = new Scanner(System.in).nextLine();
-     malade.setDateNaissance(num);
-     
-     return malade;      
+    Patient malade = new Patient();
+
+    System.out.println("Veuillez entrez le numero RAMQ de votre nouveau patient");
+    String num = scanner.nextLine();
+    if (VerificationPatient(num) == true) {
+        System.out.println("Le patient dont vous avez entré le numéro RAMQ existe déjà");
+        System.out.println("Validez l'usage des information de ce patient existant (oui/non)");
+        String choix = scanner.nextLine();
+        if (choix.equalsIgnoreCase("oui")) {//Améliorer plutard pour ajouter l'option du else
+            return rechercherPatient(num);
+        }
+    } else {
+        malade.setNumeroRAMQ(num);
+        
+        System.out.println("Veuillez entrez le nom de votre nouveau patient");
+        String name = scanner.nextLine();
+        malade.nom = name;
+        
+        System.out.println("Veuillez entrez le prénom de votre nouveau patient");
+        String Firstname = scanner.nextLine();
+        malade.prenom = Firstname;
+        
+        System.out.println("Veuillez entrez le numéro de téléphone de votre nouveau patient");
+        String number = scanner.nextLine();
+        malade.telephone = number;
+        
+        System.out.println("Veuillez entrez la ville de votre nouveau patient");
+        String city = scanner.nextLine();
+        malade.ville = city;
+        
+        System.out.println("Veuillez entrez la province de votre nouveau patient");
+        String region = scanner.nextLine();
+        malade.province = region;
+        
+        System.out.println("Veuillez entrez l'adresse de votre nouveau patient");
+        String adress = scanner.nextLine();
+        malade.addresse = adress;
+        
+        System.out.println("Veuillez entrez le code postal de votre nouveau patient");
+        String mailbox = scanner.nextLine();
+        malade.codePostal = mailbox;
+        
+        System.out.println("Votre patient a-t-il une assurance (oui/non)");
+        String assurance = scanner.nextLine();
+        if (assurance.equalsIgnoreCase("oui")) {
+            System.out.println("Veillez entrez l'id de l'assurance de votre nouveau patient");
+            int id_malade = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Veillez entrez le nom de la compagnie de l'assurance de votre nouveau patient");
+            String name_compagnie = scanner.nextLine();
+            Assurance assur = new Assurance(id_malade, name_compagnie);
+        malade.setAssurance(assur);
+        } else {
+            malade.setAssurance(null);
+        }
+
+        System.out.println("Veillez entrez la date de naissance de votre nouveau patient");
+        String date_naissance = scanner.nextLine();
+        malade.setDateNaissance(date_naissance);
+
+        System.out.println("Veuillez entrez l'age de votre patient");
+        int age = scanner.nextInt();
+        malade.setAge(age);
+    }
+    return malade;
   }
- 
-  
   public void ajouterPatient(){
       patients.add(creerPatient());
   } 
  
   public Admission creerAdmission(){
-    Admission formulaire = new Admission();
-    
+    créationMedecin();
     créationLit();
-
-     System.out.println("Veillez entrez l'id de votre nouvelle admission");
-     int id = new Scanner(System.in).nextInt();
-     formulaire.setIDAdmission(id);
-     
-    boolean ch_p = false;
-    while (true) {
-        System.out.println("Veillez définir s'il y a une chirurgie programmée dans votre nouvelle admission (oui/non)");
-        String input = new Scanner(System.in).nextLine();
-        if (input.equalsIgnoreCase("oui") || input.equalsIgnoreCase("non")) {
-           ch_p = Boolean.parseBoolean(input);
-           break;
-        } else {
-           System.out.println("Entrée invalide. Veuillez entrer 'oui' ou 'non'.");
+    // Verification de la disponibilité des lit:
+    int nombreLitDispo=0;
+    for (int i = 0; i < lits.size(); i++) {
+        while(lits.get(i).isOccupe() == false) {
+            nombreLitDispo = nombreLitDispo + 1;
+        }
+    }
+    if (nombreLitDispo == 0) {
+        System.out.println("Il n'y a pas de lit disponible pour le moment");
+        return null;
+    } else {
+        Scanner scanner = new Scanner(System.in);
+        Admission formulaire = new Admission();
+        System.out.println("Veillez entrez l'id de votre nouvelle admission");
+        int id = scanner.nextInt();
+        formulaire.setIDAdmission(id);
+         
+        boolean ch_p = false;
+        while (true) {
+            System.out.println("Veillez définir s'il y a une chirurgie programmée dans votre nouvelle admission (oui/non)");
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("oui") || input.equalsIgnoreCase("non")) {
+               ch_p = input.equalsIgnoreCase("oui");
+               break;
+            } else {
+               System.out.println("Entrée invalide. Veuillez entrer 'oui' ou 'non'.");
+            }
         }
         formulaire.setChirurgieProgrammée(ch_p);
-    }
-
-     System.out.println("Veuillez définir la date d'admission de votre nouvelle admission");
-     String date_a = new Scanner(System.in).nextLine();
-     // Définir le format de la date
-     DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-     // Convertir la chaîne de caractères en LocalDate
-     LocalDate dateAdmission = LocalDate.parse(date_a, formatter1);
-     formulaire.setDateAdmission(dateAdmission);
-     
-     if (ch_p == true) {
-        System.out.println("Veillez définir la date de la chirurgie s'il yen a de votre nouvelle admission");//S'il ya une chirurgie?
-        String date_c = new Scanner(System.in).nextLine();
-      // Définir le format de la date
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
+    
+        System.out.println("Veuillez définir la date d'admission de votre nouvelle admission");
+        String date_a = scanner.next();
+        // Définir le format de la date
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         // Convertir la chaîne de caractères en LocalDate
-        LocalDate dateChirurgie = LocalDate.parse(date_c, formatter2);
-        formulaire.setDateChirurgie(dateChirurgie);
-     } else {
-        formulaire.setDateChirurgie(null);
-     }
-     
-
-     System.out.println("Veillez indiqué si l'option téléviseur loué a été choisi pour votre nouvelle admission");
-     boolean télév = new Scanner(System.in).nextBoolean(); ///Rendre simple l'usage du boolean
-     formulaire.setTeleviseurLoué(télév);
-     
-     System.out.println("Veillez indiqué si l'option téléphone loué a été choisi pour votre nouvelle admission");
-     boolean télép = new Scanner(System.in).nextBoolean(); ///Rendre simple l'usage du boolean
-     formulaire.setTelephoneLoué(télép);
-     
-     formulaire.setPatient(creerPatient());
-
-     System.out.println("Veuillez entrez le numero du lit de votre nouvelle admission ");
-     String id_lit = new Scanner(System.in).nextLine();
-     for (int i = 0; i < lits.size(); i++) {
-        if(lits.get(i).getNumeroLit().equals(id_lit)){
-            formulaire.setLit(lits.get(i));
-            formulaire.setDepartement(lits.get(i).getDepartement()); //L'attribut département est déja contenu dans l'attribut lit creer récemment
+        LocalDate dateAdmission = LocalDate.parse(date_a, formatter1);
+        formulaire.setDateAdmission(dateAdmission);
+         
+        if (ch_p == true) {
+            System.out.println("Veillez définir la date de la chirurgie s'il yen a de votre nouvelle admission");
+            String date_c = scanner.next();
+            // Définir le format de la date
+            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
+            // Convertir la chaîne de caractères en LocalDate
+            LocalDate dateChirurgie = LocalDate.parse(date_c, formatter2);
+            formulaire.setDateChirurgie(dateChirurgie);
+        } else {
+            formulaire.setDateChirurgie(null);
         }
-     }
+    
+        System.out.println("Veillez indiqué si l'option téléviseur loué a été choisi pour votre nouvelle admission (true/false)");//Améliorer pour rendre plus compréhensible les choix pour les utilisateurs
+        boolean télév = scanner.nextBoolean();
+        
+        formulaire.setTeleviseurLoué(télév);
+         
+        System.out.println("Veillez indiqué si l'option téléphone loué a été choisi pour votre nouvelle admission (true/false)");
+        boolean télép = scanner.nextBoolean();
+        formulaire.setTelephoneLoué(télép);
 
-     
-     
-     
-     
-     
-       return formulaire;
-  }
-  private Medecin creerMedecin(){//Ameliorer le code en utilisant plutard une méthode creer personne car les memes caractéristiques reviennent
-      Medecin infirmier = new Medecin();
-     System.out.println("Veillez entrez le nom de votre nouveau patient");
-     String name = new Scanner(System.in).nextLine();
-      infirmier.nom = name;
-      
-     System.out.println("Veillez entrez le prénom de votre nouveau patient");
-     String Firstname = new Scanner(System.in).nextLine();
-      infirmier.prenom = Firstname;
-      
-     System.out.println("Veillez entrez le numéro de téléphone de votre nouveau patient");
-     String number = new Scanner(System.in).nextLine();
-      infirmier.telephone = number;
-      
-     System.out.println("Veillez entrez la ville de votre nouveau patient");
-     String city = new Scanner(System.in).nextLine();
-      infirmier.ville = city;
-      
-     System.out.println("Veillez entrez la province de votre nouveau patient");
-     String region = new Scanner(System.in).nextLine();
-      infirmier.province = region;
-     
-     System.out.println("Veillez entrez l'adresse de votre nouveau patient");
-     String adress = new Scanner(System.in).nextLine();
-      infirmier.addresse = adress;
-      
-     System.out.println("Veillez entrez le code postal de votre nouveau patient");
-     String mailbox = new Scanner(System.in).nextLine();
-      infirmier.codePostal = mailbox;
-      
-     System.out.println("Veillez entrez le numero de permis du nouveau medecin");
-     String numero_permis = new Scanner(System.in).nextLine();
-     infirmier.setNumeroPermis(numero_permis);
-     
-     System.out.println("Veillez entrez le nom du nouveau medecin");
-     String nom_med = new Scanner(System.in).nextLine();
-     infirmier.setNomUtilisateur(nom_med);
-     
-     System.out.println("Veillez entrez le mot de passe du nouveau medecin");
-     String mdp = new Scanner(System.in).nextLine();
-     infirmier.setMotDePasse(mdp);
-     
-       return infirmier;
+        formulaire.setPatient(creerPatient());
+         
+        if (creerPatient().getAssurance() == null) {
+            boolean tousEgaux = true;
+            for (int i = 0; i < lits.size(); i++) {
+                if ((lits.get(i).isOccupe() == true) && (lits.get(i).getType().equals(Type.Standart))) {//
+                    tousEgaux = false;
+                }            
+    }
+                if (tousEgaux == false) {
+                System.out.println("Le patient ne dispose pas d'assurance privée et il n'y a pas de chambre standart disponible ");
+                
+                String id_lit = scanner.next();
+                
+                    if (ch_p == true){
+                        for(int i = 0; i < lits.size(); i++) {
+                        System.out.println("Veuillez entrez le numero de lit d'une chambre semi privée de votre choix disponible étant dans le departement de chirurgie ");
+                        if(lits.get(i).getNumeroLit().equals(id_lit) && lits.get(i).getDepartement().getNomDepartement().equals("Chirurgie")){
+                            lits.get(i).setPrix(Lit.val);
+                        formulaire.setLit(lits.get(i));
+                        }
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+                    }
+                    } else {
+                        for(int i = 0; i < lits.size(); i++) {
+                        System.out.println("Veuillez entrez le numero de lit d'une chambre semi privée de votre choix disponible ");
+                        if(lits.get(i).getNumeroLit().equals(id_lit)){
+                            lits.get(i).setPrix(Lit.val);
+                        formulaire.setLit(lits.get(i));
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+                    }
+                   
+            }
+}
+        }
+            boolean tousEgaux2 = true;
+            for (int i = 0; i < lits.size(); i++) {
+            if ((lits.get(i).isOccupe() == true) && (lits.get(i).getType().equals(Type.Standart)) && (lits.get(i).getType().equals(Type.SemiPrivé))) {//
+                tousEgaux2 = false;
+            }            
+}           String id_lit = scanner.next();
+            if (tousEgaux2 == false) {
+                
+                System.out.println("Le patient ne dispose pas d'assurance privée et il n'y a pas de chambre standart disponible ni de chambre semi privée ");
+                if (ch_p == true) {
+                    for(int i = 0; i < lits.size(); i++) {
+                        System.out.println("Veuillez entrez le numero de lit d'une chambre privée de votre choix disponible étant dans le departement de chirurgie ");
+                        if(lits.get(i).getNumeroLit().equals(id_lit) && lits.get(i).getDepartement().getNomDepartement().equals("Chirurgie")){
+                            lits.get(i).setPrix(Lit.val);
+                            formulaire.setLit(lits.get(i));
+                        }
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+                    }
+                } else {
+                    System.out.println("Veuillez entrez le numero de lit d'une chambre privée de votre choix disponible ");
+                for(int i = 0; i < lits.size(); i++) {
+                    if(lits.get(i).getNumeroLit().equals(id_lit)){
+                    lits.get(i).setPrix(Lit.val);
+                        formulaire.setLit(lits.get(i));
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+        }
+                }
+            }
+        } else {
+            if (ch_p == true) {
+                formulaire.setPatient(creerPatient());
+                System.out.println("Veuillez entrez le numero du lit de votre nouvelle admission dans le département de chirurgie");
+                String id_lit2 = scanner.next();
+                for (int i = 0; i < lits.size(); i++) {
+                    if(lits.get(i).getNumeroLit().equals(id_lit2) && lits.get(i).getDepartement().getNomDepartement().equals("Chirurgie")){
+                        formulaire.setLit(lits.get(i));
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+                        
+                }
+                }
+            }
+             else {
+                formulaire.setPatient(creerPatient());
+    
+                System.out.println("Veuillez entrez le numero du lit de votre nouvelle admission ");
+                String id_lit2 = scanner.next();
+                for (int i = 0; i < lits.size(); i++) {
+                    if(lits.get(i).getNumeroLit().equals(id_lit2)){
+                        formulaire.setLit(lits.get(i));
+                        if (formulaire.getPatient().getAge() <= 16) {
+                            formulaire.setDepartement((departements.get(5)));
+                        }else{
+                            formulaire.setDepartement(lits.get(i).getDepartement());
+                        }
+                        
+                }
+            }
+            }
+        while (true) {
+            System.out.println("Voulez vous ajouter un nouveau medecin à cette admission (oui/non)");
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("oui")) {
+                  formulaire.setMedecin(creerMedecin());
+               break;
+                } else if(input.equalsIgnoreCase("non")){
+                    Scanner scanner2 = new Scanner(System.in);
+                    System.out.println("Veuillez entrez le numero du permis du medecin voulu");
+                    String num_permis = scanner2.nextLine();
+                    for (int i = 0; i < medecins.size(); i++) {
+                        if(medecins.get(i).getNumeroPermis().equals(num_permis)){
+                            formulaire.setMedecin(medecins.get(i));
+                        }
+                    }
+                    scanner2.close();
+                break;  
+            }
+        }
+    
+        scanner.close();
+        
+        }
+        
+        }
+        return formulaire;
+    }
+   
        
   }
-  public void ajouterAdmission(){
-      admissions.add(creerAdmission());
+  public Medecin creerMedecin(){
+    Scanner scanner = new Scanner(System.in);
+    Medecin infirmier = new Medecin();
+    
+    System.out.println("Veillez entrez le nom de votre nouveau patient");
+    String Lastname = scanner.nextLine();
+    infirmier.nom = Lastname;
+    
+    System.out.println("Veillez entrez le prénom de votre nouveau patient");
+    String Firstname = scanner.nextLine();
+    infirmier.prenom = Firstname;
+    
+    System.out.println("Veillez entrez le numéro de téléphone de votre nouveau patient");
+    String number = scanner.nextLine();
+    infirmier.telephone = number;
+    
+    System.out.println("Veillez entrez la ville de votre nouveau patient");
+    String city = scanner.nextLine();
+    infirmier.ville = city;
+    
+    System.out.println("Veillez entrez la province de votre nouveau patient");
+    String region = scanner.nextLine();
+    infirmier.province = region;
+     
+    System.out.println("Veillez entrez l'adresse de votre nouveau patient");
+    String adress = scanner.nextLine();
+    infirmier.addresse = adress;
+    
+    System.out.println("Veillez entrez le code postal de votre nouveau patient");
+    String mailbox = scanner.nextLine();
+    infirmier.codePostal = mailbox;
+    
+    System.out.println("Veillez entrez le numero de permis du nouveau medecin");
+    String numero_permis = scanner.nextLine();
+    infirmier.setNumeroPermis(numero_permis);
+     
+    System.out.println("Veillez entrez le nom du nouveau medecin");
+    String nom_med = scanner.nextLine();
+    infirmier.setNomUtilisateur(nom_med);
+     
+    System.out.println("Veillez entrez le mot de passe du nouveau medecin");
+    String mdp = scanner.nextLine();
+    infirmier.setMotDePasse(mdp);
+    scanner.close();
+    admissions.add(creerAdmission());
+    return infirmier;
+      
   } 
   public Patient rechercherPatient(){//Améliorer les codes de recherches en ajoutant d'autres types de recherches
       Patient resultat = new Patient();
       System.out.println("Veuillez indiquer le numéro RAMQ du patient recherché");
-      String scn_p = new Scanner(System.in).nextLine();
+      Scanner scanner = new Scanner(System.in);
+      String scn_p = scanner.nextLine();
       for(int i=0; i<patients.size();i++){
             if(patients.get(i).getNumeroRAMQ().equals(scn_p)){
                 resultat = patients.get(i);
             }
+            scanner.close();
       }
       return resultat;
   } 
+    public Patient rechercherPatient(String ramq){
+        int tampon = 0;
+        if (VerificationPatient(ramq)==true) {
+            for(int i=0; i<patients.size();i++){
+                if(patients.get(i).getNumeroRAMQ().equals(ramq)){
+                  tampon = i;                 
+            }         
+        }
+    }    
+    return patients.get(tampon); 
+    }
+
+  public boolean VerificationPatient(String ramq){//Améliorer les codes de recherches en ajoutant d'autres types de recherches
+      
+  boolean resultat = true;
+      for(int i=0; i<patients.size();i++){
+            if (patients.get(i).getNumeroRAMQ().equals(ramq)) {
+                resultat = true;
+            } else {
+                resultat = false;
+            }
+            
+      }
+          return resultat;
+      
+  } 
+
   private void donnerConge(){//Cette méthode ne fonctionne que si on considère que le patient a une seul admission qui lui est propre: L'améliorer
-      System.out.println("Veuillez indiquer le numéro RAMQ du patient recherché");
-      String scn_p = new Scanner(System.in).nextLine();
+     Scanner scanner = new Scanner(System.in);  
+    System.out.println("Veuillez indiquer le numéro RAMQ du patient recherché");
+      String scn_p = scanner.nextLine();
       System.out.println("Veuillez entrez la nouvelle date sous le format YYYY-MM-DD du patient recherché");
       String date;
-      date = new Scanner(System.in).nextLine();
+      date = scanner.nextLine();
       // Définir le format de la date
       DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
@@ -258,13 +470,14 @@ public class Gestionnaire {
                 System.out.println("choix {j}: "+tableau_patient.get(j).toString());
 }
             System.out.println("Quelle est votre choix d'admissions ?");
-            int scn_tampon = new Scanner(System.in).nextInt();                            
+            int scn_tampon = scanner.nextInt();                            
             tableau_patient.get(scn_tampon).setDateConge(dateConge);
             for(int x=0; x < admissions.size(); x++){
                 if(tableau_patient.get(scn_tampon).equals(admissions.get(x))){
                     admissions.set(x, tableau_patient.get(scn_tampon));//Utilise admissions.set(x, tableau_patient.get(j)) pour remplacer l'élément à l'index x par celui de tableau_patient
                     admissions.get(x).lit.setOccupe(false);             }
-                            }     
+                            } 
+            scanner.close();    
                         }
                     }  
                 }
@@ -281,16 +494,47 @@ public class Gestionnaire {
   }
   public void supprimerMedecin(){//Améliorer les recherches
       System.out.println("Veuillez indiquer le numéro de permis du medecin à supprimer");
-      String scn_m = new Scanner(System.in).nextLine();
+      Scanner scanner = new Scanner(System.in);
+      String scn_m = scanner.nextLine();
       for(int i=0; i<medecins.size();i++){
             if(medecins.get(i).getNumeroPermis().equals(scn_m)){
                 medecins.remove(medecins.get(i));
+              scanner.close();  
             }
   } 
-  }
-    public void afficherFacturePatient(Admission malade_recherche){
-      rechercherPatient();//Maintenant qu'on a trouver le patient comment afficher sa facture?
-      
-  } 
 }
-//Comment vas t'on ajouter le patients avec ses attributs spécifiques/ Peut etre qu'il faut des méthodes qui crées toutes ces instances?
+
+public void afficherFacturePatient(){
+    for (int i = 0; i < admissions.size(); i++) {
+        Scanner scanner = new Scanner(System.in);
+        int id = scanner.nextInt();
+        scanner.close();
+        double facture = 0;
+        if (admissions.get(i).getIDAdmission() == id) {
+
+           long daysBetween = ChronoUnit.DAYS.between(admissions.get(i).getDateAdmission(), admissions.get(i).getDateConge());
+           facture = (admissions.get(i).getLit().getPrix() * daysBetween);
+              if (admissions.get(i).isTeleviseurLoué()) {
+                  facture += 42.50 * daysBetween;
+              }
+                if (admissions.get(i).isTelephoneLoué()) {
+                    facture += 7.50 * daysBetween;
+                }
+        }
+        System.out.println("La facture totale du patient est de: " + facture);
+        
+    }
+
+}
+public void sauvegarderAdmissions(String filePath) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        for (Admission admission : admissions) {
+            writer.write(admission.toString());
+            writer.newLine();
+        }
+        System.out.println("Les admissions ont été sauvegardées avec succès.");
+    } catch (IOException e) {
+        System.err.println("Erreur lors de la sauvegarde des admissions: " + e.getMessage());
+    }
+}
+}

@@ -11,6 +11,7 @@ public class Assurance {
         this.idAssurance = idAssurance;
         this.nomCompagnie = nomCompagnie;
     }
+
     @Override
     public String toString() {
         return "Assurance{" + "idAssurance=" + idAssurance + ", nomCompagnie=" + nomCompagnie + '}';

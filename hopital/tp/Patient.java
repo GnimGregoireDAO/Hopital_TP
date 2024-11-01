@@ -3,13 +3,25 @@ public class Patient extends Personne{
     private String numeroRAMQ;
     private String dateNaissance;
     private Assurance assurance;
+    private int age;
+
+    
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Assurance getAssurance() {
+        return assurance;
+    }
 
     public Patient() {
     }
 
-    public Patient(String numeroRAMQ, String dateNaissance) {
+    public Patient(String numeroRAMQ, String dateNaissance, int age) {
         this.numeroRAMQ = numeroRAMQ;
-        this.dateNaissance = dateNaissance;     
+        this.dateNaissance = dateNaissance;   
+        this.age = age;
     }
     
 
@@ -36,6 +48,12 @@ public class Patient extends Personne{
     public String getNumeroRAMQ() {
         return numeroRAMQ;
     }
+
+    public int getAge() {
+        return age;
+    }
+    
+    
 
     @Override
     public String toString() {

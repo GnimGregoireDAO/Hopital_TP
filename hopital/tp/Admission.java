@@ -10,8 +10,10 @@ public class Admission {
     private int IDAdmission;
     private LocalDate dateAdmission, dateChirurgie, dateConge;  
     private boolean televiseurLoué, telephoneLoué, chirurgieProgrammée;
+    
     Patient patient;
     Lit lit;
+    
     Medecin medecin;
     Departement departement;
 
@@ -71,13 +73,35 @@ public class Admission {
     public int getIDAdmission() {
         return IDAdmission;
     }
+    public LocalDate getDateConge() {
+        return dateConge;
+    }
+    public LocalDate getDateAdmission() {
+        return dateAdmission;
+    }
 
+    public LocalDate getDateChirurgie() {
+        return dateChirurgie;
+    }
+    public Lit getLit() {
+        return lit;
+    }
+    public boolean isTeleviseurLoué() {
+        return televiseurLoué;
+    }
 
+    public boolean isTelephoneLoué() {
+        return telephoneLoué;
+    }
+
+    public boolean isChirurgieProgrammée() {
+        return chirurgieProgrammée;
+    }
+    
     @Override
     public String toString() {
         return "Admission{" + "IDAdmission=" + IDAdmission + ", chirurgieProgramm\u00e9e=" + chirurgieProgrammée + ", dateAdmission=" + dateAdmission + ", dateChirurgie=" + dateChirurgie + ", dateConge=" + dateConge + ", televiseurLou\u00e9=" + televiseurLoué + ", telephoneLou\u00e9=" + telephoneLoué + ", patient=" + patient + ", lit=" + lit + ", medecin=" + medecin + ", departement=" + departement + '}';
-    }
-    
-    
+    } 
+
     
 }

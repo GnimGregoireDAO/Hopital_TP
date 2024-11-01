@@ -1,29 +1,25 @@
 package hopital.tp;
 
-
-
 class Lit {
     public enum Type {
-        Standart, Privé, Public
+        Standart, Privé, SemiPrivé;    
     }
     private String numeroLit;
     private boolean occupe;
-    private Type type; // standart, private ou public
+    private Type type; // standart, private ou semi-private
     private Departement departement;
     private double prix;
-    private Lit tampon = new Lit();
+    public static double val = 48.5;
+    public static double val2 = 58.0;
+    public static double val3 = 278.0;
+    public static double val_assur = 0.0;
     
-    
-
     public Lit(String numeroLit, boolean occupe, Type type, Departement departement) {
         this.numeroLit = numeroLit;
         this.occupe = occupe;
         this.type = type;
-        this.departement = departement;
-        
-        
+        this.departement = departement;        
     }
-
     public Lit() {
     }
 
@@ -35,21 +31,17 @@ class Lit {
         this.prix = prix;
         return prix;
     }
-
-    
     public double getPrix() {  
-        switch (tampon.getType()) {
+        switch (getType()) {
             case Standart ->                 {
-                    double val = 48.5;
-                    prix = tampon.setPrix(val);
+                    prix = setPrix(val);
                 }
             case Privé ->                 {
-                    double val = 58.0;
-                    prix = tampon.setPrix(val);
+                    val2 = 58.0;
+                    prix = setPrix(val2);
                 }
-            case Public ->                 {
-                    double val = 278.0;
-                    prix = tampon.setPrix(val);
+            case SemiPrivé ->                 {
+                    prix = setPrix(val3);
                 }
             default -> {
             }
@@ -80,6 +72,9 @@ class Lit {
     }
     public Departement getDepartement() {
         return departement;
+    }
+    public boolean isOccupe() {
+        return occupe;
     }
 
     @Override
