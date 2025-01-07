@@ -12,21 +12,23 @@ Java : Langage principal pour le développement de l'application.
 JavaFX : Pour la création de l'interface utilisateur.
 SQLite : Base de données légère pour stocker les informations des patients et des admissions.
 JUnit : Pour les tests unitaires et l'assurance qualité du code.
-Installation et Utilisation
+
+# Installation et Utilisation
 Cloner le Repository :
 
 bash
 git clone https://github.com/votre-utilisateur/TP2_GestionAdmissions.git
 cd TP2_GestionAdmissions
-Compiler le Projet :
 
+Compiler le Projet :
 bash
 javac -cp .:lib/* src/*.java
-Exécuter l'Application :
 
+Exécuter l'Application :
 bash
 java -cp .:lib/* src.Main
-Contribution
+
+# Contribution
 Alex Berhaine
 Emmanuel Backiny Tamla
 Gnim Gregoire Dao
