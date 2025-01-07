@@ -1,5 +1,5 @@
-Hopital_TP
-Bienvenue dans le projet TP2_GestionAdmissions ! Ce projet vise à développer une application de gestion des admissions hospitalières, en mettant l'accent sur l'automatisation et l'optimisation des processus administratifs. L'application permet de gérer les admissions, les chirurgies programmées, les congés, ainsi que la location de téléviseurs et de téléphones pour les patients.
+TP2_GestionAdmissions
+Bienvenue dans le projet TP2_GestionAdmissions ! Ce projet vise à développer une application de gestion des admissions hospitalières, en mettant l'accent sur l'automatisation et l'optimisation des processus.
 
 Fonctionnalités Principales
 Gestion des Admissions : Enregistrement des nouvelles admissions avec des détails complets tels que la date d'admission, la chirurgie programmée, et les dates de congé.
@@ -12,19 +12,20 @@ JavaFX : Pour la création de l'interface utilisateur.
 SQLite : Base de données légère pour stocker les informations des patients et des admissions.
 JUnit : Pour les tests unitaires et l'assurance qualité du code.
 Installation et Utilisation
-Cloner le Repository :
-
+Cloner le Repository
+sh
 git clone https://github.com/votre-utilisateur/TP2_GestionAdmissions.git
 cd TP2_GestionAdmissions
-Compiler le Projet :
-
+Compiler le Projet
+sh
 javac -cp .:lib/* src/*.java
-Exécuter l'Application :
-
+Exécuter l'Application
+sh
 java -cp .:lib/* src.Main
 Contribution
-Alex Berhaine, Emmanuel Backiny Tamla, Gnim Gregoire Dao
-
+Alex Berhaine
+Emmanuel Backiny Tamla
+Gnim Gregoire Dao
 Licence
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
 
