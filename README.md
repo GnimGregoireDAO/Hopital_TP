@@ -12,15 +12,18 @@ JavaFX : Pour la création de l'interface utilisateur.
 SQLite : Base de données légère pour stocker les informations des patients et des admissions.
 JUnit : Pour les tests unitaires et l'assurance qualité du code.
 Installation et Utilisation
-Cloner le Repository
-sh
+Cloner le Repository :
+
+bash
 git clone https://github.com/votre-utilisateur/TP2_GestionAdmissions.git
 cd TP2_GestionAdmissions
-Compiler le Projet
-sh
+Compiler le Projet :
+
+bash
 javac -cp .:lib/* src/*.java
-Exécuter l'Application
-sh
+Exécuter l'Application :
+
+bash
 java -cp .:lib/* src.Main
 Contribution
 Alex Berhaine
